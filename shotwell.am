@@ -23,7 +23,8 @@ shotwell_VALAFLAGS = $(COMMON_VALAFLAGS) \
 	--pkg gstreamer-pbutils-1.0 --pkg misc \
 	--gresources $(abs_top_srcdir)/org.gnome.Shotwell.gresource.xml \
 	$(UNITY_VALAFLAGS) \
-	$(COMMON_VALAFLAGS_POST)
+	$(COMMON_VALAFLAGS_POST) \
+	$(FACE_TOOL_VALAFLAGS)
 
 dist_noinst_DATA += org.gnome.Shotwell.gresource.xml
 
@@ -72,6 +73,7 @@ shotwell_SOURCES = \
 	src/dialogs/SetBackground.vala \
 	src/dialogs/ProgressDialog.vala \
 	src/dialogs/SetBackgroundSlideshow.vala \
+	src/dialogs/MaybeHeaderbarDialog.vala \
 	src/editing_tools/EditingTools.vala \
 	src/editing_tools/RGBHistogramManipulator.vala \
 	src/editing_tools/StraightenTool.vala \
@@ -241,4 +243,5 @@ shotwell_SOURCES = \
 	src/.unitize/_Library_unitize_entry.vala \
 	src/.unitize/_Direct_unitize_entry.vala \
 	plugins/shotwell-plugin-dev-1.0.vapi \
-	src/shotwell-graphics-processor.vapi
+	src/shotwell-graphics-processor.vapi \
+	$faces_SOURCES

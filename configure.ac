@@ -145,6 +145,26 @@ AS_IF([test "x$with_authenticator" = "xshotwell"],
       ])
 
 dnl ***********************************************************************
+dnl Faces tool support
+dnl ***********************************************************************
+AC_ARG_ENABLE([face_tool],
+	      AS_HELP_STRING([--enable-face_tool],
+			             [Enable face detection]),
+		  [],
+		  [enable_face_tool=no])
+
+AS_IF([test "x$enable_face_tool" = "xyes"], [
+	PKG_CHECK_MODULES(FACES_TOOL, [opencv >= 2.4],
+                      [
+					   HAVE_FACE_TOOL=yes
+					   FACE_TOOL_VALAFLAGS="-D ENABLE_FACES"
+					   AC_SUBST([FACE_TOOL_VALAFLAGS])
+					  ], [HAVE_FACE_TOOL=no])
+    ], [HAVE_FACE_TOOL=no])
+AC_SUBST([HAVE_FACE_TOOL])
+AM_CONDITIONAL([HAVE_FACE_TOOL],[test "x$HAVE_FACE_TOOL" = "xyes"])
+
+dnl ***********************************************************************
 dnl Unity support
 dnl ***********************************************************************
 AC_ARG_ENABLE([unity-support],
@@ -302,4 +322,5 @@ echo "  Unity support ........................ : ${HAVE_UNITY}"
 echo "  Additional publishing plugins ........ : ${HAVE_EXTRA_PLUGINS}"
 echo "  Authentication library ............... : ${with_authenticator}"
 echo "  Publishers ........................... : ${ENABLED_PUBLISHERS}"
+echo "  Face_tool ............................ : ${HAVE_FACE_TOOL}"
 echo ""

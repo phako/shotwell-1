@@ -45,6 +45,9 @@ public class LibraryWindow : AppWindow {
         SAVED_SEARCH,
         EVENTS,
         FOLDERS,
+#if ENABLE_FACES
+        FACES,
+#endif
         TAGS
     }
     
@@ -109,6 +112,9 @@ public class LibraryWindow : AppWindow {
     private Library.Branch library_branch = new Library.Branch();
     private Tags.Branch tags_branch = new Tags.Branch();
     private Folders.Branch folders_branch = new Folders.Branch();
+#if ENABLE_FACES
+    private Faces.Branch faces_branch = new Faces.Branch();
+#endif
     private Events.Branch events_branch = new Events.Branch();
     private Camera.Branch camera_branch = new Camera.Branch();
     private Searches.Branch saved_search_branch = new Searches.Branch();
@@ -163,6 +169,10 @@ public class LibraryWindow : AppWindow {
         sidebar_tree.graft(library_branch, SidebarRootPosition.LIBRARY);
         sidebar_tree.graft(tags_branch, SidebarRootPosition.TAGS);
         sidebar_tree.graft(folders_branch, SidebarRootPosition.FOLDERS);
+#if ENABLE_FACES
+        sidebar_tree.graft(faces_branch, SidebarRootPosition.FACES);
+#endif
+
         sidebar_tree.graft(events_branch, SidebarRootPosition.EVENTS);
         sidebar_tree.graft(camera_branch, SidebarRootPosition.CAMERAS);
         sidebar_tree.graft(saved_search_branch, SidebarRootPosition.SAVED_SEARCH);
@@ -403,6 +413,16 @@ public class LibraryWindow : AppWindow {
         else
             debug("No search entry found for rename");
     }
+
+#if ENABLE_FACES
+    public void rename_face_in_sidebar(Face face) {
+        Faces.SidebarEntry? entry = faces_branch.get_entry_for_face(face);
+        if (entry != null)
+            sidebar_tree.rename_entry_in_place(entry);
+        else
+            assert_not_reached();
+    }
+#endif
 
     protected override void on_quit() {
         Config.Facade.get_instance().set_library_window_state(maximized, dimensions);

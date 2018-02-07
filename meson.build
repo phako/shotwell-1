@@ -1,5 +1,5 @@
 project('Shotwell', ['vala', 'c'],
-        version : '0.27.4',
+        version : '0.27.2',
         default_options : ['buildtype=debugoptimized'])
 
 gnome = import('gnome')
@@ -79,6 +79,11 @@ endforeach
 
 if get_option('disable-dupe-detection')
   add_global_arguments(['--define=NO_DUPE_DETECTION'], language : vala)
+endif
+
+if get_option('face')
+  add_global_arguments(['--define=ENABLE_FACES'], language : 'vala')
+  subdir('facedetect')
 endif
 
 json_glib = dependency('json-glib-1.0')

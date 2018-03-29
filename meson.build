@@ -1,5 +1,6 @@
 project('Shotwell', ['vala', 'c'],
-        version : '0.27.2',
+        version : '0.29.0',
+        meson_version : '>= 0.43.0',
         default_options : ['buildtype=debugoptimized'])
 
 gnome = import('gnome')
@@ -81,7 +82,7 @@ if get_option('disable-dupe-detection')
   add_global_arguments(['--define=NO_DUPE_DETECTION'], language : vala)
 endif
 
-if get_option('face')
+if get_option('face-detection')
   add_global_arguments(['--define=ENABLE_FACES'], language : 'vala')
   subdir('facedetect')
 endif
